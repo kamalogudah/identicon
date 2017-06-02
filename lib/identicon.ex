@@ -28,10 +28,13 @@ defmodule Identicon do
   end
 
   def build_grid(%Identicon.Image{hex: hex} = image) do 
-    hex
+    grid = hex
     |> Enum.chunk(3)
     |> Enum.map(&mirror_row/1)
+    |> List.flatten
+    |> Enum.with_index
     #|> mirror_row
+    %Identicon.Image{image | grid: grid}
   end 
 
   def pick_color(image) do
